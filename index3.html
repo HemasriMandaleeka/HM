@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideal Educational Material Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .teacher { background: #4CAF50; color: white; }
+        .student { background: #2196F3; color: white; }
+        .xerox { background: #FF9800; color: white; }
+
+        .auth-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+        }
+
+        .breadcrumb {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item {
+            color: #667eea;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .breadcrumb-item:hover {
+            color: #5a67d8;
+        }
+
+        .breadcrumb-current {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .nav-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .nav-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            background: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .file-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .file-icon {
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .file-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { background: #2196F3; color: white; }
+        .btn-success { background: #4CAF50; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn-warning { background: #FF9800; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .navigation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .files-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header" id="header">
+            <div class="logo">📚 EduPortal</div>
+            <div class="user-info" id="userInfo">
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Authentication Section -->
+        <div class="auth-section" id="authSection">
+            <h2>Login to EduPortal</h2>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="userType">User Type:</label>
+                <select id="userType">
+                    <option value="">Select User Type</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                    <option value="xerox">Xerox Operator</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="branch">Branch:</label>
+                <select id="branch">
+                    <option value="">Select Branch</option>
+                    <option value="cse">Computer Science Engineering</option>
+                    <option value="ece">Electronics & Communication</option>
+                    <option value="eee">Electrical & Electronics</option>
+                    <option value="mech">Mechanical Engineering</option>
+                    <option value="civil">Civil Engineering</option>
+                    <option value="it">Information Technology</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="otp">OTP:</label>
+                <input type="text" id="otp" placeholder="Enter OTP" disabled>
+            </div>
+            <button class="upload-btn" onclick="sendOTP()" id="sendOtpBtn">Send OTP</button>
+            <button class="upload-btn hidden" onclick="verifyOTP()" id="verifyOtpBtn">Verify & Login</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content hidden" id="mainContent">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb" id="breadcrumb">
+                <span class="breadcrumb-item" onclick="navigateTo('dashboard')">Dashboard</span>
+            </div>
+
+            <!-- Dashboard View -->
+            <div id="dashboardView">
+                <h2>📊 Dashboard</h2>
+                <div class="stats-grid" id="statsGrid"></div>
+                <div class="navigation-grid" id="navigationGrid"></div>
+            </div>
+
+            <!-- Branch View -->
+            <div id="branchView" class="hidden">
+                <h2 id="branchTitle">📚 Branch</h2>
+                <div class="navigation-grid" id="batchGrid"></div>
+            </div>
+
+            <!-- Batch View -->
+            <div id="batchView" class="hidden">
+                <h2 id="batchTitle">🎓 Batch</h2>
+                <div class="navigation-grid" id="yearGrid"></div>
+            </div>
+
+            <!-- Year/Files View -->
+            <div id="filesView" class="hidden">
+                <div class="tabs">
+                    <button class="tab-button active" onclick="showTab('browse')" id="browseTab">Browse Files</button>
+                    <button class="tab-button hidden" onclick="showTab('upload')" id="uploadTab">Upload Files</button>
+                    <button class="tab-button hidden" onclick="showTab('manage')" id="manageTab">Manage Files</button>
+                </div>
+
+                <!-- Browse Files Tab -->
+                <div class="tab-content active" id="browseContent">
+                    <h3 id="yearTitle">📁 Files</h3>
+                    
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label for="subjectFilter">Subject:</label>
+                            <select id="subjectFilter" onchange="filterFiles()">
+                                <option value="">All Subjects</option>
+                            </select>
+                        </div>
+                        <div class="filter-group search-box">
+                            <input type="text" id="searchBox" placeholder="Search files..." onkeyup="filterFiles()">
+                        </div>
+                    </div>
+
+                    <div class="files-grid" id="filesGrid"></div>
+                </div>
+
+                <!-- Upload Files Tab -->
+                <div class="tab-content" id="uploadContent">
+                    <h3>📤 Upload New Material</h3>
+                    
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                        <p>Click here to select files or drag and drop</p>
+                        <input type="file" id="fileInput" class="file-input" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.png">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="uploadTitle">Title:</label>
+                        <input type="text" id="uploadTitle" placeholder="Enter file title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="uploadSubject">Subject:</label>
+                        <select id="uploadSubject"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="uploadDescription">Description:</label>
+                        <textarea id="uploadDescription" rows="3" placeholder="Enter file description (optional)"></textarea>
+                    </div>
+
+                    <button class="upload-btn" onclick="uploadFiles()">Upload Files</button>
+                </div>
+
+                <!-- Manage Files Tab -->
+                <div class="tab-content" id="manageContent">
+                    <h3>⚙️ Manage Files</h3>
+                    <div class="files-grid" id="manageFilesGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application State
+        let currentUser = null;
+        let currentNavigation = {
+            view: 'dashboard',
+            branch: null,
+            batch: null,
+            year: null
+        };
+
+        // Branch data with subjects
+        const branches = {
+            'cse': {
+                name: 'Computer Science Engineering',
+                icon: '💻',
+                subjects: {
+                    1: ['Programming in C', 'Mathematics-I', 'Physics', 'Engineering Drawing', 'English'],
+                    2: ['Data Structures', 'Mathematics-II', 'Chemistry', 'Object Oriented Programming', 'Environmental Science'],
+                    3: ['Database Management', 'Computer Networks', 'Operating Systems', 'Software Engineering', 'Web Technologies'],
+                    4: ['Machine Learning', 'Artificial Intelligence', 'Cloud Computing', 'Mobile App Development', 'Project Work']
+                }
+            },
+            'ece': {
+                name: 'Electronics & Communication',
+                icon: '📡',
+                subjects: {
+                    1: ['Basic Electronics', 'Mathematics-I', 'Physics', 'Engineering Drawing', 'English'],
+                    2: ['Circuit Analysis', 'Mathematics-II', 'Chemistry', 'Digital Electronics', 'Environmental Science'],
+                    3: ['Communication Systems', 'Microprocessors', 'Control Systems', 'Signal Processing', 'VLSI Design'],
+                    4: ['Wireless Communication', 'Embedded Systems', 'Antenna Theory', 'Optical Communication', 'Project Work']
+                }
+            },
+            'eee': {
+                name: 'Electrical & Electronics',
+                icon: '⚡',
+                subjects: {
+                    1: ['Basic Electrical', 'Mathematics-I', 'Physics', 'Engineering Drawing', 'English'],
+                    2: ['Circuit Theory', 'Mathematics-II', 'Chemistry', 'Electronic Devices', 'Environmental Science'],
+                    3: ['Power Systems', 'Electrical Machines', 'Control Systems', 'Power Electronics', 'Measurements'],
+                    4: ['Renewable Energy', 'Smart Grids', 'High Voltage Engineering', 'Industrial Automation', 'Project Work']
+                }
+            },
+            'mech': {
+                name: 'Mechanical Engineering',
+                icon: '⚙️',
+                subjects: {
+                    1: ['Engineering Mechanics', 'Mathematics-I', 'Physics', 'Engineering Drawing', 'English'],
+                    2: ['Thermodynamics', 'Mathematics-II', 'Chemistry', 'Manufacturing Processes', 'Environmental Science'],
+                    3: ['Fluid Mechanics', 'Machine Design', 'Heat Transfer', 'Automobile Engineering', 'Industrial Engineering'],
+                    4: ['Robotics', 'Advanced Manufacturing', 'Renewable Energy Systems', 'Project Management', 'Project Work']
+                }
+            },
+            'civil': {
+                name: 'Civil Engineering',
+                icon: '🏗️',
+                subjects: {
+                    1: ['Engineering Mechanics', 'Mathematics-I', 'Physics', 'Engineering Drawing', 'English'],
+                    2: ['Building Materials', 'Mathematics-II', 'Chemistry', 'Surveying', 'Environmental Science'],
+                    3: ['Structural Analysis', 'Concrete Technology', 'Soil Mechanics', 'Transportation Engineering', 'Water Resources'],
+                    4: ['Earthquake Engineering', 'Advanced Concrete Design', 'Construction Management', 'GIS Applications', 'Project Work']
+                }
+            },
+            'it': {
+                name: 'Information Technology',
+                icon: '🌐',
+                subjects: {
+                    1: ['Programming Fundamentals', 'Mathematics-I', 'Physics', 'Engineering Drawing', 'English'],
+                    2: ['Data Structures', 'Mathematics-II', 'Chemistry', 'Digital Logic', 'Environmental Science'],
+                    3: ['Database Systems', 'Computer Networks', 'Web Development', 'Software Testing', 'System Analysis'],
+                    4: ['Big Data Analytics', 'Cybersecurity', 'Cloud Computing', 'Internet of Things', 'Project Work']
+                }
+            }
+        };
+
+        // Batches with current years
+        const batches = {
+            '2021-2025': { currentYear: 4, years: [1, 2, 3, 4] },
+            '2022-2026': { currentYear: 3, years: [1, 2, 3] },
+            '2023-2027': { currentYear: 2, years: [1, 2] },
+            '2024-2028': { currentYear: 1, years: [1] }
+        };
+
+        // Sample files data
+        let files = [
+            {
+                id: 1,
+                title: "Introduction to Programming",
+                branch: "cse",
+                batch: "2022-2026",
+                year: 1,
+                subject: "Programming in C",
+                description: "Basic programming concepts and C language fundamentals",
+                uploadedBy: "teacher1@school.com",
+                uploadDate: "2024-11-15",
+                fileName: "c_programming_intro.pdf",
+                fileSize: "2.5 MB",
+                type: "pdf",
+                accessLevel: "public"
+            },
+            {
+                id: 2,
+                title: "Data Structures Notes",
+                branch: "cse",
+                batch: "2022-2026",
+                year: 2,
+                subject: "Data Structures",
+                description: "Comprehensive notes on arrays, linked lists, stacks and queues",
+                uploadedBy: "teacher2@school.com",
+                uploadDate: "2024-11-14",
+                fileName: "data_structures.pdf",
+                fileSize: "4.2 MB",
+                type: "pdf",
+                accessLevel: "public"
+            },
+            {
+                id: 3,
+                title: "Database Design Lab Manual",
+                branch: "cse",
+                batch: "2021-2025",
+                year: 3,
+                subject: "Database Management",
+                description: "Laboratory exercises for database design and SQL queries",
+                uploadedBy: "teacher1@school.com",
+                uploadDate: "2024-11-13",
+                fileName: "db_lab_manual.pdf",
+                fileSize: "3.8 MB",
+                type: "pdf",
+                accessLevel: "public"
+            },
+            {
+                id: 4,
+                title: "Basic Electronics Circuit Analysis",
+                branch: "ece",
+                batch: "2023-2027",
+                year: 1,
+                subject: "Basic Electronics",
+                description: "Fundamentals of electronic circuits and components",
+                uploadedBy: "teacher3@school.com",
+                uploadDate: "2024-11-12",
+                fileName: "electronics_basics.pdf",
+                fileSize: "2.1 MB",
+                type: "pdf",
+                accessLevel: "public"
+            }
+        ];
+
+        // Mock user database
+        const users = {
+            "teacher1@school.com": { type: "teacher", name: "Dr. Smith", branches: ["cse", "it"] },
+            "teacher2@school.com": { type: "teacher", name: "Prof. Johnson", branches: ["cse"] },
+            "teacher3@school.com": { type: "teacher", name: "Dr. Wilson", branches: ["ece", "eee"] },
+            "student1@school.com": { type: "student", name: "Alice Cooper", branch: "cse", batch: "2022-2026" },
+            "student2@school.com": { type: "student", name: "Bob Wilson", branch: "ece", batch: "2021-2025" },
+            "student3@school.com": { type: "student", name: "Carol Davis", branch: "cse", batch: "2023-2027" },
+            "xerox1@school.com": { type: "xerox", name: "Copy Center Admin", branches: ["all"] }
+        };
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('fileInput').addEventListener('change', handleFileSelection);
+            
+            const uploadArea = document.querySelector('.upload-area');
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleDrop);
+        });
+
+        // Authentication Functions
+        function sendOTP() {
+            const email = document.getElementById('email').value;
+            const userType = document.getElementById('userType').value;
+            const branch = document.getElementById('branch').value;
+
+            if (!email || !userType) {
+                showMessage('Please enter email and select user type', 'error');
+                return;
+            }
+
+            if (!users[email] || users[email].type !== userType) {
+                showMessage('Invalid email or user type combination', 'error');
+                return;
+            }
+
+            // For students, validate branch
+            if (userType === 'student') {
+                if (!branch) {
+                    showMessage('Please select your branch', 'error');
+                    return;
+                }
+                if (users[email].branch !== branch) {
+                    showMessage('Invalid branch for this student', 'error');
+                    return;
+                }
+            }
+
+            // For teachers, validate branch access
+            if (userType === 'teacher') {
+                if (!branch) {
+                    showMessage('Please select your branch', 'error');
+                    return;
+                }
+                if (!users[email].branches.includes(branch)) {
+                    showMessage('You do not have access to this branch', 'error');
+                    return;
+                }
+            }
+
+            document.getElementById('otp').disabled = false;
+            document.getElementById('sendOtpBtn').classList.add('hidden');
+            document.getElementById('verifyOtpBtn').classList.remove('hidden');
+            
+            showMessage('OTP sent to your email! Use "123456" for demo', 'success');
+        }
+
+        function verifyOTP() {
+            const email = document.getElementById('email').value;
+            const otp = document.getElementById('otp').value;
+            const userType = document.getElementById('userType').value;
+            const branch = document.getElementById('branch').value;
+
+            if (otp !== '123456') {
+                showMessage('Invalid OTP', 'error');
+                return;
+            }
+
+            currentUser = {
+                email: email,
+                type: userType,
+                name: users[email].name,
+                branch: userType === 'student' ? users[email].branch : branch,
+                batch: users[email].batch || null,
+                branches: users[email].branches || [branch]
+            };
+
+            showMessage('Login successful!', 'success');
+            
+            setTimeout(() => {
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                setupUserInterface();
+                navigateTo('dashboard');
+            }, 1000);
+        }
+
+        function logout() {
+            currentUser = null;
+            currentNavigation = { view: 'dashboard', branch: null, batch: null, year: null };
+            
+            document.getElementById('authSection').classList.remove('hidden');
+            document.getElementById('mainContent').classList.add('hidden');
+            
+            // Reset form
+            document.getElementById('email').value = '';
+            document.getElementById('userType').value = '';
+            document.getElementById('branch').value = '';
+            document.getElementById('otp').value = '';
+            document.getElementById('otp').disabled = true;
+            document.getElementById('sendOtpBtn').classList.remove('hidden');
+            document.getElementById('verifyOtpBtn').classList.add('hidden');
+        }
+
+        function setupUserInterface() {
+            const userInfo = document.getElementById('userInfo');
+            const uploadTab = document.getElementById('uploadTab');
+            const manageTab = document.getElementById('manageTab');
+
+            userInfo.innerHTML = `
+                <div class="user-badge ${currentUser.type}">${currentUser.type.toUpperCase()}</div>
+                <span>${currentUser.name}</span>
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+            `;
+
+            // Show appropriate tabs based on user type
+            if (currentUser.type === 'teacher') {
+                uploadTab.classList.remove('hidden');
+                manageTab.classList.remove('hidden');
+            } else if (currentUser.type === 'xerox') {
+                manageTab.classList.remove('hidden');
+            }
+        }
+
+        // Navigation Functions
+        function navigateTo(view, branch = null, batch = null, year = null) {
+            // Hide all views
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('branchView').classList.add('hidden');
+            document.getElementById('batchView').classList.add('hidden');
+            document.getElementById('filesView').classList.add('hidden');
+
+            currentNavigation = { view, branch, batch, year };
+
+            switch(view) {
+                case 'dashboard':
+                    renderDashboard();
+                    break;
+                case 'branch':
+                    renderBranch(branch);
+                    break;
+                case 'batch':
+                    renderBatch(branch, batch);
+                    break;
+                case 'files':
+                    renderFiles(branch, batch, year);
+                    break;
+            }
+
+            updateBreadcrumb();
+        }
+
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            let breadcrumbHtml = '<span class="breadcrumb-item" onclick="navigateTo(\'dashboard\')">Dashboard</span>';
+
+            if (currentNavigation.branch) {
+                breadcrumbHtml += ` > <span class="breadcrumb-item" onclick="navigateTo('branch', '${currentNavigation.branch}')">${branches[currentNavigation.branch].name}</span>`;
+            }
+
+            if (currentNavigation.batch) {
+                breadcrumbHtml += ` > <span class="breadcrumb-item" onclick="navigateTo('batch', '${currentNavigation.branch}', '${currentNavigation.batch}')">Batch ${currentNavigation.batch}</span>`;
+            }
+
+            if (currentNavigation.year) {
+                breadcrumbHtml += ` > <span class="breadcrumb-current">Year ${currentNavigation.year}</span>`;
+            }
+
+            breadcrumb.innerHTML = breadcrumbHtml;
+        }
+
+        function renderDashboard() {
+            document.getElementById('dashboardView').classList.remove('hidden');
+            
+            // Render stats
+            renderStats();
+            
+            // Render navigation based on user type
+            const navigationGrid = document.getElementById('navigationGrid');
+            
+            if (currentUser.type === 'student') {
+                // Students see their branch directly
+                navigateTo('branch', currentUser.branch);
+                return;
+            }
+            
+            if (currentUser.type === 'teacher') {
+                // Teachers see branches they have access to
+                navigationGrid.innerHTML = currentUser.branches.map(branchCode => {
+                    const branch = branches[branchCode];
+                    return `
+                        <div class="nav-card" onclick="navigateTo('branch', '${branchCode}')">
+                            <div class="nav-icon">${branch.icon}</div>
+                            <div class="nav-title">${branch.name}</div>
+                            <div class="nav-subtitle">Access your teaching materials</div>
+                        </div>
+                    `;
+                }).join('');
+            } else if (currentUser.type === 'xerox') {
+                // Xerox operators see all branches
+                navigationGrid.innerHTML = Object.entries(branches).map(([code, branch]) => {
+                    return `
+                        <div class="nav-card" onclick="navigateTo('branch', '${code}')">
+                            <div class="nav-icon">${branch.icon}</div>
+                            <div class="nav-title">${branch.name}</div>
+                            <div class="nav-subtitle">Printing services</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function renderStats() {
+            const statsGrid = document.getElementById('statsGrid');
+            let stats = [];
+
+            if (currentUser.type === 'student') {
+                const studentFiles = files.filter(f => 
+                    f.branch === currentUser.branch && 
+                    f.batch === currentUser.batch
+                );
+                const currentYearFiles = studentFiles.filter(f => 
+                    f.year === batches[currentUser.batch].currentYear
+                );
+                
+                stats = [
+                    { label: 'Total Files Available', value: studentFiles.length },
+                    { label: 'Current Year Files', value: currentYearFiles.length },
+                    { label: 'Current Year', value: batches[currentUser.batch].currentYear },
+                    { label: 'Batch', value: currentUser.batch }
+                ];
+            } else if (currentUser.type === 'teacher') {
+                const teacherFiles = files.filter(f => f.uploadedBy === currentUser.email);
+                const branchFiles = files.filter(f => currentUser.branches.includes(f.branch));
+                
+                stats = [
+                    { label: 'Files Uploaded', value: teacherFiles.length },
+                    { label: 'Total Branch Files', value: branchFiles.length },
+                    { label: 'Branches Access', value: currentUser.branches.length },
+                    { label: 'Recent Uploads', value: teacherFiles.filter(f => {
+                        const uploadDate = new Date(f.uploadDate);
+                        const weekAgo = new Date();
+                        weekAgo.setDate(weekAgo.getDate() - 7);
+                        return uploadDate > weekAgo;
+                    }).length }
+                ];
+            } else if (currentUser.type === 'xerox') {
+                stats = [
+                    { label: 'Total number of prints', value: files.length },
+                    { label: 'Total printed prints', value: Object.keys(branches).length },
+                    { label: 'Pending prints', value: Object.keys(batches).length },
+                    { label: 'Total amount', value: Math.floor(Math.random() * 15) + 500 }
+                ];
+            }
+
+            statsGrid.innerHTML = stats.map(stat => `
+                <div class="stat-card">
+                    <div class="stat-number">${stat.value}</div>
+                    <div class="stat-label">${stat.label}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderBranch(branchCode) {
+            document.getElementById('branchView').classList.remove('hidden');
+            const branch = branches[branchCode];
+            
+            document.getElementById('branchTitle').textContent = `📚 ${branch.name}`;
+            
+            const batchGrid = document.getElementById('batchGrid');
+            
+            if (currentUser.type === 'student') {
+                // Students see only their batch
+                navigateTo('batch', branchCode, currentUser.batch);
+                return;
+            }
+            
+            // Teachers and xerox see all batches
+            batchGrid.innerHTML = Object.entries(batches).map(([batchCode, batchData]) => {
+                const filesCount = files.filter(f => f.branch === branchCode && f.batch === batchCode).length;
+                
+                return `
+                    <div class="nav-card" onclick="navigateTo('batch', '${branchCode}', '${batchCode}')">
+                        <div class="nav-icon">🎓</div>
+                        <div class="nav-title">Batch ${batchCode}</div>
+                        <div class="nav-subtitle">
+                            Current Year: ${batchData.currentYear} | ${filesCount} files
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderBatch(branchCode, batchCode) {
+            document.getElementById('batchView').classList.remove('hidden');
+            
+            document.getElementById('batchTitle').textContent = `🎓 Batch ${batchCode}`;
+            
+            const yearGrid = document.getElementById('yearGrid');
+            const batchData = batches[batchCode];
+            
+            if (currentUser.type === 'student') {
+                // Students see all years they've completed + current year
+                const accessibleYears = [];
+                for (let i = 1; i <= batchData.currentYear; i++) {
+                    accessibleYears.push(i);
+                }
+                
+                yearGrid.innerHTML = accessibleYears.map(year => {
+                    const yearFiles = files.filter(f => 
+                        f.branch === branchCode && 
+                        f.batch === batchCode && 
+                        f.year === year
+                    );
+                    
+                    return `
+                        <div class="nav-card" onclick="navigateTo('files', '${branchCode}', '${batchCode}', ${year})">
+                            <div class="nav-icon">${year === batchData.currentYear ? '📘' : '📗'}</div>
+                            <div class="nav-title">Year ${year}</div>
+                            <div class="nav-subtitle">
+                                ${year === batchData.currentYear ? 'Current Year' : 'Completed'} | ${yearFiles.length} files
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                // Teachers and xerox see all years
+                yearGrid.innerHTML = batchData.years.map(year => {
+                    const yearFiles = files.filter(f => 
+                        f.branch === branchCode && 
+                        f.batch === batchCode && 
+                        f.year === year
+                    );
+                    
+                    return `
+                        <div class="nav-card" onclick="navigateTo('files', '${branchCode}', '${batchCode}', ${year})">
+                            <div class="nav-icon">${year === batchData.currentYear ? '📘' : '📗'}</div>
+                            <div class="nav-title">Year ${year}</div>
+                            <div class="nav-subtitle">
+                                ${year === batchData.currentYear ? 'Current Year' : year > batchData.currentYear ? 'Future' : 'Completed'} | ${yearFiles.length} files
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function renderFiles(branchCode, batchCode, year) {
+            document.getElementById('filesView').classList.remove('hidden');
+            
+            document.getElementById('yearTitle').textContent = `📁 Year ${year} - ${branches[branchCode].name}`;
+            
+            // Update subject filter based on branch and year
+            updateSubjectFilter(branchCode, year);
+            
+            // Load files for this specific context
+            loadFilesForContext(branchCode, batchCode, year);
+            
+            // Update upload form if teacher
+            if (currentUser.type === 'teacher') {
+                updateUploadForm(branchCode, year);
+            }
+        }
+
+        function updateSubjectFilter(branchCode, year) {
+            const subjectFilter = document.getElementById('subjectFilter');
+            const subjects = branches[branchCode].subjects[year] || [];
+            
+            subjectFilter.innerHTML = '<option value="">All Subjects</option>' + 
+                subjects.map(subject => `<option value="${subject}">${subject}</option>`).join('');
+        }
+
+        function updateUploadForm(branchCode, year) {
+            const uploadSubject = document.getElementById('uploadSubject');
+            const subjects = branches[branchCode].subjects[year] || [];
+            
+            uploadSubject.innerHTML = '<option value="">Select Subject</option>' + 
+                subjects.map(subject => `<option value="${subject}">${subject}</option>`).join('');
+        }
+
+        function loadFilesForContext(branchCode, batchCode, year) {
+            const contextFiles = files.filter(f => 
+                f.branch === branchCode && 
+                f.batch === batchCode && 
+                f.year === year
+            );
+            
+            renderFileGrid(contextFiles);
+        }
+
+        //Tab Management
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(tabName + 'Content').classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+
+            if (tabName === 'manage') {
+                renderManageFiles();
+            }
+        }
+    
+
+        // File Management Functions
+        function handleFileSelection(event) {
+            const files = event.target.files;
+            displaySelectedFiles(files);
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const droppedFiles = event.dataTransfer.files;
+            displaySelectedFiles(droppedFiles);
+        }
+
+        function displaySelectedFiles(selectedFiles) {
+            const uploadArea = document.querySelector('.upload-area');
+            let fileList = '<div style="margin-top: 1rem;"><strong>Selected Files:</strong><ul>';
+            
+            for (let file of selectedFiles) {
+                fileList += `<li>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</li>`;
+            }
+            
+            fileList += '</ul></div>';
+            uploadArea.innerHTML = `
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                <p>Click here to select files or drag and drop</p>
+                ${fileList}
+            `;
+        }
+
+        function uploadFiles() {
+            const fileInput = document.getElementById('fileInput');
+            const title = document.getElementById('uploadTitle').value;
+            const subject = document.getElementById('uploadSubject').value;
+            const description = document.getElementById('uploadDescription').value;
+
+            if (!fileInput.files.length || !title || !subject) {
+                showMessage('Please fill all required fields and select files', 'error');
+                return;
+            }
+
+            // Validate file types
+            for (let file of fileInput.files) {
+                if (!validateFileType(file.name)) {
+                    showMessage(`Invalid file type: ${file.name}. Please upload only documents, presentations, or images.`, 'error');
+                    return;
+                }
+                
+                if (file.size > 10 * 1024 * 1024) {
+                    showMessage(`File too large: ${file.name}. Maximum size is 10MB.`, 'error');
+                    return;
+                }
+            }
+
+            // Add files to the current context
+            for (let file of fileInput.files) {
+                const newFile = {
+                    id: files.length + 1,
+                    title: fileInput.files.length > 1 ? `${title} - ${file.name}` : title,
+                    branch: currentNavigation.branch,
+                    batch: currentNavigation.batch,
+                    year: currentNavigation.year,
+                    subject: subject,
+                    description: description,
+                    uploadedBy: currentUser.email,
+                    uploadDate: new Date().toISOString().split('T')[0],
+                    fileName: file.name,
+                    fileSize: (file.size / 1024 / 1024).toFixed(2) + ' MB',
+                    type: file.name.split('.').pop().toLowerCase(),
+                    accessLevel: 'public'
+                };
+                
+                files.push(newFile);
+            }
+
+            showMessage(`Successfully uploaded ${fileInput.files.length} file(s)!`, 'success');
+            
+            // Reset form
+            document.getElementById('uploadTitle').value = '';
+            document.getElementById('uploadSubject').value = '';
+            document.getElementById('uploadDescription').value = '';
+            fileInput.value = '';
+            
+            document.querySelector('.upload-area').innerHTML = `
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                <p>Click here to select files or drag and drop</p>
+            `;
+
+            // Refresh current view
+            loadFilesForContext(currentNavigation.branch, currentNavigation.batch, currentNavigation.year);
+        }
+
+        function renderFileGrid(contextFiles) {
+            const filesGrid = document.getElementById('filesGrid');
+            const filteredFiles = getFilteredFiles(contextFiles);
+
+            if (filteredFiles.length === 0) {
+                filesGrid.innerHTML = '<div style="text-align: center; color: #666; grid-column: 1/-1;">No files found for this context</div>';
+                return;
+            }
+
+            filesGrid.innerHTML = filteredFiles.map(file => {
+                const canAccess = checkFileAccess(file);
+                if (!canAccess) return '';
+
+                return `
+                    <div class="file-card" style="position: relative;">
+                        <div class="file-icon">
+                            ${getFileIcon(file.type)}
+                        </div>
+                        <div class="file-title">${file.title}</div>
+                        <div class="file-meta">
+                            <div><strong>Subject:</strong> ${file.subject}</div>
+                            <div><strong>Size:</strong> ${file.fileSize}</div>
+                            <div><strong>Uploaded:</strong> ${file.uploadDate}</div>
+                            <div><strong>By:</strong> ${file.uploadedBy.split('@')[0]}</div>
+                            ${file.accessLevel === 'restricted' ? '<div style="color: #f44336;"><strong>🔒 Restricted Access</strong></div>' : ''}
+                        </div>
+                        ${file.description ? `<div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${file.description}</div>` : ''}
+                        <div class="file-actions">
+                            <button class="btn btn-primary" onclick="viewFile(${file.id})">👁️ View</button>
+                            <button class="btn btn-success" onclick="downloadFile(${file.id})">⬇️ Download</button>
+                            ${currentUser && currentUser.type === 'student' ? `<button class="btn" style="background: #E91E63; color: white;" onclick="addToFavorites(${file.id})">❤️ Favorite</button>` : ''}
+                            ${currentUser && currentUser.type === 'xerox' ? `<button class="btn btn-warning" onclick="printFile(${file.id})">🖨️ Print</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getFilteredFiles(contextFiles) {
+            const subjectFilter = document.getElementById('subjectFilter').value;
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+
+            return contextFiles.filter(file => {
+                const matchesSubject = !subjectFilter || file.subject === subjectFilter;
+                const matchesSearch = !searchTerm || 
+                    file.title.toLowerCase().includes(searchTerm) ||
+                    file.description.toLowerCase().includes(searchTerm) ||
+                    file.subject.toLowerCase().includes(searchTerm);
+
+                return matchesSubject && matchesSearch;
+            });
+        }
+
+        function filterFiles() {
+            loadFilesForContext(currentNavigation.branch, currentNavigation.batch, currentNavigation.year);
+        }
+
+        function checkFileAccess(file) {
+            if (!currentUser) return false;
+            
+            if (currentUser.type === 'teacher') return true;
+            if (currentUser.type === 'xerox') return true;
+            
+            if (currentUser.type === 'student') {
+                if (file.accessLevel === 'restricted') return false;
+                if (file.branch !== currentUser.branch) return false;
+                if (file.batch !== currentUser.batch) return false;
+                
+                const batchData = batches[currentUser.batch];
+                if (file.year > batchData.currentYear) return false;
+                
+                return true;
+            }
+            
+            return false;
+        }
+
+        function renderManageFiles() {
+            const manageFilesGrid = document.getElementById('manageFilesGrid');
+            let managedFiles = [];
+
+            if (currentUser.type === 'teacher') {
+                managedFiles = files.filter(file => 
+                    file.uploadedBy === currentUser.email &&
+                    file.branch === currentNavigation.branch &&
+                    file.batch === currentNavigation.batch &&
+                    file.year === currentNavigation.year
+                );
+            } else if (currentUser.type === 'xerox') {
+                managedFiles = files.filter(file => 
+                    file.branch === currentNavigation.branch &&
+                    file.batch === currentNavigation.batch &&
+                    file.year === currentNavigation.year
+                );
+            }
+
+            if (managedFiles.length === 0) {
+                manageFilesGrid.innerHTML = '<div style="text-align: center; color: #666;">No files to manage in this context</div>';
+                return;
+            }
+
+            manageFilesGrid.innerHTML = managedFiles.map(file => `
+                <div class="file-card" style="position: relative;">
+                    <div class="file-icon">
+                        ${getFileIcon(file.type)}
+                    </div>
+                    <div class="file-title">${file.title}</div>
+                    <div class="file-meta">
+                        <div><strong>Subject:</strong> ${file.subject}</div>
+                        <div><strong>Size:</strong> ${file.fileSize}</div>
+                        <div><strong>Uploaded:</strong> ${file.uploadDate}</div>
+                        <div><strong>Access:</strong> <span style="color: ${file.accessLevel === 'public' ? '#4CAF50' : '#f44336'};">${file.accessLevel}</span></div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="btn btn-primary" onclick="editFile(${file.id})">✏️ Edit</button>
+                        <button class="btn btn-warning" onclick="toggleAccess(${file.id})">${file.accessLevel === 'public' ? '🔒 Restrict' : '🔓 Open'}</button>
+                        <button class="btn btn-danger" onclick="deleteFile(${file.id})">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getFileIcon(type) {
+            const icons = {
+                'pdf': '📄',
+                'doc': '📝',
+                'docx': '📝',
+                'ppt': '📊',
+                'pptx': '📊',
+                'txt': '📃',
+                'jpg': '🖼️',
+                'png': '🖼️',
+                'jpeg': '🖼️'
+            };
+            return icons[type] || '📁';
+        }
+
+        // File Actions
+        function viewFile(fileId) {
+            const file = files.find(f => f.id === fileId);
+            showMessage(`Opening ${file.title}...`, 'success');
+        }
+
+        function downloadFile(fileId) {
+            const file = files.find(f => f.id === fileId);
+            showMessage(`Downloading ${file.fileName}...`, 'success');
+        }
+
+        function printFile(fileId) {
+            const file = files.find(f => f.id === fileId);
+            showMessage(`Sending ${file.fileName} to printer...`, 'success');
+        }
+
+        function addToFavorites(fileId) {
+            const file = files.find(f => f.id === fileId);
+            showMessage(`${file.title} added to favorites!`, 'success');
+        }
+
+        function editFile(fileId) {
+            const file = files.find(f => f.id === fileId);
+            const newTitle = prompt('Enter new title:', file.title);
+            if (newTitle && newTitle !== file.title) {
+                file.title = newTitle;
+                showMessage('File updated successfully!', 'success');
+                loadFilesForContext(currentNavigation.branch, currentNavigation.batch, currentNavigation.year);
+                renderManageFiles();
+            }
+        }
+
+        function toggleAccess(fileId) {
+            const file = files.find(f => f.id === fileId);
+            file.accessLevel = file.accessLevel === 'public' ? 'restricted' : 'public';
+            showMessage(`File access changed to ${file.accessLevel}`, 'success');
+            loadFilesForContext(currentNavigation.branch, currentNavigation.batch, currentNavigation.year);
+            renderManageFiles();
+        }
+
+        function deleteFile(fileId) {
+            if (confirm('Are you sure you want to delete this file?')) {
+                files = files.filter(f => f.id !== fileId);
+                showMessage('File deleted successfully!', 'success');
+                loadFilesForContext(currentNavigation.branch, currentNavigation.batch, currentNavigation.year);
+                renderManageFiles();
+            }
+        }
+
+        function validateFileType(fileName) {
+            const allowedTypes = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'jpg', 'png', 'jpeg'];
+            const fileExtension = fileName.split('.').pop().toLowerCase();
+            return allowedTypes.includes(fileExtension);
+        }
+
+        // Utility Functions
+        function showMessage(message, type) {
+            const existingMessage = document.querySelector('.success-message, .error-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+            messageDiv.textContent = message;
+
+            const container = document.querySelector('.auth-section') || document.querySelector('.main-content');
+            container.insertBefore(messageDiv, container.firstChild);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+    </script>
+    <script src="server.js"></script>
+</body>
+</html>
